@@ -1,0 +1,89 @@
+{
+    "code" :"1",
+    "data" :{
+        "count" : 524,
+        "list" :  [{
+            "trade_no" : "3013" ,
+            "trade_code" : "TradeNo" ,
+            "trade_name" : "" ,
+            "trade_seq" : "003" ,
+            "trade_type" : "0" ,
+            "level_type" : "2" ,
+            "value_type" : "1" ,
+            "group_by" : "ItemCode" ,
+            "parent_node" : "BillItems" ,
+            "valid" : "Y" 
+        },
+        {
+            "trade_no" : "3013" ,
+            "trade_code" : "TradeNo" ,
+            "trade_name" : "" ,
+            "trade_seq" : "003" ,
+            "trade_type" : "0" ,
+            "level_type" : "2" ,
+            "value_type" : "1" ,
+            "group_by" : "ItemCode" ,
+            "parent_node" : "BillItems" ,
+            "valid" : "Y" 
+        },{
+            "trade_no" : "3013" ,
+            "trade_code" : "TradeNo" ,
+            "trade_name" : "" ,
+            "trade_seq" : "003" ,
+            "trade_type" : "0" ,
+            "level_type" : "2" ,
+            "value_type" : "1" ,
+            "group_by" : "ItemCode" ,
+            "parent_node" : "BillItems" ,
+            "valid" : "Y" 
+        },{
+            "trade_no" : "3013" ,
+            "trade_code" : "TradeNo" ,
+            "trade_name" : "" ,
+            "trade_seq" : "003" ,
+            "trade_type" : "0" ,
+            "level_type" : "2" ,
+            "value_type" : "1" ,
+            "group_by" : "ItemCode" ,
+            "parent_node" : "BillItems" ,
+            "valid" : "Y" 
+        },{
+            "trade_no" : "3013" ,
+            "trade_code" : "TradeNo" ,
+            "trade_name" : "" ,
+            "trade_seq" : "003" ,
+            "trade_type" : "0" ,
+            "level_type" : "2" ,
+            "value_type" : "1" ,
+            "group_by" : "ItemCode" ,
+            "parent_node" : "BillItems" ,
+            "valid" : "Y" 
+        },{
+            "trade_no" : "3013" ,
+            "trade_code" : "TradeNo" ,
+            "trade_name" : "" ,
+            "trade_seq" : "003" ,
+            "trade_type" : "0" ,
+            "level_type" : "2" ,
+            "value_type" : "1" ,
+            "group_by" : "ItemCode" ,
+            "parent_node" : "BillItems" ,
+            "valid" : "Y" 
+        },{
+            "trade_no" : "3013" ,
+            "trade_code" : "TradeNo" ,
+            "trade_name" : "" ,
+            "trade_seq" : "003" ,
+            "trade_type" : "0" ,
+            "level_type" : "2" ,
+            "value_type" : "1" ,
+            "group_by" : "ItemCode" ,
+            "parent_node" : "BillItems" ,
+            "valid" : "Y" 
+        }]
+    }
+    
+    
+    
+   
+}

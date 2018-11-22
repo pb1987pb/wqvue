@@ -1,0 +1,54 @@
+{
+    "code" :"1",
+    "data" :{
+        "count" : 87,
+        "list" :  [{
+            "interface" : "common" ,
+            "trade_code" : "5003" ,
+            "trade_name" : "门诊病人就诊记录" ,
+            "cmdtext" : "zhis4_uniform_interface_common.of_5003" ,
+            "parm_count" : "6" ,
+            "valid" : "Y"  
+        },{
+            "interface" : "common" ,
+            "trade_code" : "5004" ,
+            "trade_name" : "门诊医嘱记录查询" ,
+            "cmdtext" : "zhis4_uniform_interface_common.of_5004" ,
+            "parm_count" : "6" ,
+            "valid" : "Y"  
+        },{
+            "interface" : "common" ,
+            "trade_code" : "1001" ,
+            "trade_name" : "网络测试" ,
+            "cmdtext" : "zhis4_uniform_interface_common.of_1001" ,
+            "parm_count" : "6" ,
+            "valid" : "Y"  
+        },{
+            "interface" : "common" ,
+            "trade_code" : "2001" ,
+            "trade_name" : "患者信息校验" ,
+            "cmdtext" : "zhis4_uniform_interface_common.of_2001" ,
+            "parm_count" : "6" ,
+            "valid" : "Y"  
+        },{
+            "interface" : "common" ,
+            "trade_code" : "2002" ,
+            "trade_name" : "建档" ,
+            "cmdtext" : "zhis4_uniform_interface_common.of_2002" ,
+            "parm_count" : "6" ,
+            "valid" : "N"  
+        },
+        {
+            "interface" : "tj" ,
+            "trade_code" : "2002" ,
+            "trade_name" : "患者建档" ,
+            "cmdtext" : "pak_interface_comm.of_2002" ,
+            "parm_count" : "0" ,
+            "valid" : "Y"  
+        }]
+    }
+    
+    
+    
+   
+}

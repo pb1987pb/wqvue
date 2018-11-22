@@ -1,0 +1,22 @@
+{
+    "code" :"1",
+    "data" :{
+        "count" : 524,
+        "list" :  [{
+            "trade_no" : "31949029" ,
+            "trade_type" : "8002" ,
+            "trans_id" : "20181019050149155669000" ,
+            "deviceid" : "pc0001" ,
+            "operator" : "tj/tj001" ,
+            "trade_date" : "2018-10-19 5:01:49" ,
+            "trade_text" : "{'method':'8002','token':'IiuWDBVayTpfOJJK','user':'7258','device':'pc0001','orgId':'H0410,'data':{'pid':'0003030618','visitNo':'349303001','sumCost':'1685.80','sumCharge':'1057.90','list':[{'itemCode':'1943960','quantity':'1','price':'120.00','cost':'120.00','charges':'120.00','execDept':'90071103','seqNumber':'F1810150003'}]}}" ,
+            "return_text" : "没有在诊疗字典中找到有效的项目代码为1943960的项目" ,
+            "return_code" : "-1" 
+        }
+      ]
+    }
+    
+    
+    
+   
+}

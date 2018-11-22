@@ -1,0 +1,41 @@
+{
+    "code" :"1",
+    "data" :{
+        "count" : 5,
+        "list" :  [{
+            "interface" : "tj" ,
+            "authen_key" : "IiuWDBVayTpfOJJK" ,
+            "config" : "{'default':{'user':'tj/tj01','dev':'tjDev'}}" ,
+            "remark" : "体检" 
+        },{
+            "interface" : "common" ,
+            "authen_key" : "oXhdGricQRlxeufe" ,
+            "config" : "" ,
+            "remark" : "HIS统一平台" 
+        },{
+            "interface" : "spt" ,
+            "authen_key" : "EYOkNxolwXzEgJwm" ,
+            "config" : "{'default':{'user':'spt/spt001','dev':'sptDev'}}" ,
+            "remark" : "市平台" 
+        },{
+            "interface" : "hrp" ,
+            "authen_key" : "vRyxCqTnfhEXUxtx" ,
+            "config" : "{'default':{'user':'hrp/hrp001','dev':'hrpDev'}}" ,
+            "remark" : "HRP" 
+        },{
+            "interface" : "demo" ,
+            "authen_key" : "oXhdGricQRlxeufg" ,
+            "config" : "" ,
+            "remark" : "示例demo" 
+        },{
+            "interface" : "operat" ,
+            "authen_key" : "ZKfRuNzAYCoGNdfv" ,
+            "config" : "" ,
+            "remark" : "手术接口" 
+        }]
+    }
+    
+    
+    
+   
+}
