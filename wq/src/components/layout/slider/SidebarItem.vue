@@ -5,13 +5,16 @@
 
      <!-- v-if="!onlyOneChild.noShowingChildren"是自己新加的，是为了不让下面的showingChildren.length =0 的情况显示 -->
       <!-- <app-link :to="resolvePath(onlyOneChild.path)" v-if="!onlyOneChild.noShowingChildren"> -->
-        <app-link :to="resolvePath(onlyOneChild.path)"> 
+        <!--<app-link :to="resolvePath(onlyOneChild.path)"> 
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <!-- 这个地方要注意，为什么有||item.meta.icon，是因为匹配下去的子类有可能没有icon,必须保证第一级的有icon-->
         <item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||item.meta.icon" :title="onlyOneChild.meta.title" />
         </el-menu-item>
-      </app-link>
+      </app-link>-->
+<el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+        <item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||item.meta.icon" :title="onlyOneChild.meta.title" />
+        </el-menu-item>
 
+       
     </template>
 
     <el-submenu v-else  :index="resolvePath(item.path)">
@@ -19,7 +22,7 @@
         <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
       </template>
 
-      <template v-for="child in item.children" v-if="!child.hidden">
+      <template v-for="child in item.children"  v-if="!child.hidden">
         <sidebar-item
           v-if="child.children&&child.children.length>0"
           :is-nest="true"
@@ -27,12 +30,15 @@
           :key="child.path"
           :base-path="resolvePath(child.path)"
           class="nest-menu" />
-        <app-link v-else :to="resolvePath(child.path)" :key="child.name">,
+        <!--<app-link v-else :to="resolvePath(child.path)" :key="child.name">,
           
           <el-menu-item :index="resolvePath(child.path)">
 <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
           </el-menu-item>
-        </app-link>
+        </app-link>-->
+         <el-menu-item :index="resolvePath(child.path)" :key="child.path">
+<item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
+          </el-menu-item>
       </template>
     </el-submenu>
 
@@ -41,12 +47,13 @@
 
 <script>
 import path from 'path'
-import { isExternal , item } from '@/utils'
-import AppLink from './Link'
+import { isExternal } from '@/utils'
+// import AppLink from './Link'
 import Item from './Item'
 export default {
   name: 'SidebarItem',
-  components: {AppLink , Item },
+  // components: {AppLink , Item },
+   components: {Item },
   // mixins: [FixiOSBug],
   props: {
     // route object

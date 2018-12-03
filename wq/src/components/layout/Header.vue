@@ -102,13 +102,14 @@
     }
 </script>
 <style scoped>
-.header{position:relative;box-sizing:border-box;width:100%;height:70px;font-size:22px;color:#fff}
+.header{position: fixed; box-sizing:border-box;width:100%;height:70px;font-size:22px;color:#fff;z-index: 1001;left: 0;top: 0}
+
 .collapse-btn{float:left;padding:0 21px;cursor:pointer;line-height:70px}
 .header .logo{float:left;width:250px;line-height:70px}
 .header-right{float:right;padding-right:50px}
 .header-user-con{display:flex;height:70px;align-items:center}
 .btn-fullscreen{transform:rotate(45deg);margin-right:5px;font-size:24px}
-.btn-bell,.btn-fullscreen{position:relative;width:30px;height:30px;text-align:center;border-radius:15px;cursor:pointer}
+.btn-bell,.btn-fullscreen{width:30px;height:30px;text-align:center;border-radius:15px;cursor:pointer}
 .btn-bell-badge{position:absolute;right:0;top:-2px;width:8px;height:8px;border-radius:4px;background:#f56c6c;color:#fff}
 .btn-bell .el-icon-bell{color:#fff}
 .user-name{margin-left:10px}

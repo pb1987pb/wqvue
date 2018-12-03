@@ -2,10 +2,10 @@
     <div class="wrapper">
         <v-head></v-head>
         <v-sidebar class="sidebar-container"></v-sidebar>
-        <div class="content-box" :class="{'content-collapse':colla}">
+        <div class="content-box" :class="{'content-collapse':collapse}">
             <!--<v-tags></v-tags>-->
             <div class="content">
-                <transition name="move" mode="out-in">
+                <transition name="fade-transform" mode="out-in">
                     <keep-alive :include="tagsList">
                         <router-view></router-view>
                     </keep-alive>
@@ -44,13 +44,6 @@
     }
 </script>
 <style>
-.sidebar-container{transition: width 0.28s;
-    position: absolute !important;
-    font-size: 0px;
-    top: 70px;
-    bottom: 0;
-    left: 0;
-    z-index: 1001;
-    overflow: hidden;}
+
 </style>
 
