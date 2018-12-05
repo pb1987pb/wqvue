@@ -1,0 +1,27 @@
+@import './reset.css';
+@import './transition.css';
+@import './icon.css';
+@import './sidebar.css';
+@import './element-ui.css';
+
+/*整个页面的布局*/
+#app{
+  height: 100%;
+}
+.wrapper{height: 100%;  width: 100%; position: relative;}
+.content-box {
+    min-height: 100%; /*这个要注意，要设定*/
+    padding-left: 240px;
+    padding-top: 70px;
+    padding-bottom: 30px;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    background: #f0f0f0;
+    box-sizing:border-box;
+}
+.content-box.content-collapse {
+    padding-left: 65px;
+}
+.content {
+    padding: 10px;
+}

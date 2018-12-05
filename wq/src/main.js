@@ -7,7 +7,7 @@ import store from './store';
 import 'normalize.css';//基本样式
 import 'element-ui/lib/theme-chalk/index.css';    // 默认主题
 // import '../static/css/theme-green/index.css';       // 浅绿色主题
-import '../static/css/icon.css';
+import './styles/index.css';
 import "babel-polyfill"; //兼容 e9和一些低版本的高级浏览器对es6新语法不支持
 
 import http from '@/utils/http.js'

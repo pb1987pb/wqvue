@@ -3,9 +3,6 @@
         computed:{
                 ...mapGetters([
           'collapse',
-        ]),
-          colla(){
-            return this.collapse
-        },
+        ])
         }
     }

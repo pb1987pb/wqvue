@@ -1,0 +1,23 @@
+.sidebar-container{transition: width 0.28s;
+    position: fixed !important;
+    font-size: 0px;
+    top: 70px;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    overflow: hidden;}
+.myslider {
+    width: 240px;
+    height: 100%;
+}
+.sidebar-container .el-scrollbar__wrap{overflow-x: hidden;}
+.myslider.el-menu--collapse{width: 64px;}
+.sidebar-container .el-scrollbar__view{height: 100%;}
+
+/* 收缩菜单的时候，箭头消失，文字消失*/
+.el-menu--collapse>.menu-wrapper>.el-submenu>.el-submenu__title .el-submenu__icon-arrow{display: none}
+.el-menu--collapse>.menu-wrapper>.el-submenu>.el-submenu__title span{height: 0;
+width: 0;
+overflow: hidden;
+visibility: hidden;
+display: inline-block}

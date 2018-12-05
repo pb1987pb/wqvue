@@ -1,0 +1,6 @@
+/*自己写的element的效果*/
+/*修复dialog不居中*/
+.el-dialog{position:absolute;top:50%;left:50%;margin: 0!important;transform:translate(-50%, -50%)}
+.el-table tr:hover {
+    background: #f6faff;
+}

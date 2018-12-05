@@ -3,13 +3,13 @@
 
 // Vue.use(Router);
 
-import Layout from '@/components/common/Home.vue';
+import Layout from '@/components/layout/Home.vue';//布局文件
 
 
 export const constantRouterMap =[
           {
             path: '/login',
-            component: resolve => require(['../components/page/Login.vue'], resolve)
+            component: resolve => require(['@/pages/login'], resolve)
         }
 ]
 export default new VueRouter({
@@ -30,7 +30,7 @@ export const asyncRouterMap = [
             children:[
                 {
                     path: 'index',
-                    component: resolve => require(['../components/page/BaseTable.vue'], resolve),
+                    component: resolve => require(['@/pages/interface'], resolve),
                     meta: { title: '接口管理',icon: 'el-icon-lx-cascades' }
                 }
             ]
@@ -41,18 +41,18 @@ export const asyncRouterMap = [
             children:[
                 {
                     path: 'index',
-                    component: resolve => require(['../components/page/Request.vue'], resolve),
+                    component: resolve => require(['@/pages/request'], resolve),
                     meta: { title: 'request管理' ,icon: 'el-icon-lx-copy'}
                 }
             ]
         },
         {
-            path: '/reponse',
+            path: '/response',
             component: Layout,
             children:[
                 {
                     path: 'index',
-                    component: resolve => require(['../components/page/Response.vue'], resolve),
+                    component: resolve => require(['@/pages/response'], resolve),
                     meta: { title: 'reponse管理' ,icon: 'el-icon-lx-emoji'},
                 },
             ]
@@ -64,14 +64,14 @@ export const asyncRouterMap = [
             children:[
                 {
                     path: 'index',
-                    component: resolve => require(['../components/page/log.vue'], resolve),
+                    component: resolve => require(['@/pages/log'], resolve),
                     meta: { title: '日志管理' ,icon: 'el-icon-lx-favor'}
                 },
                 {
                     path: 'detail',
                     hidden: true,
-                    component: resolve => require(['../components/page/logdetail.vue'], resolve),
-                    meta: { title: '日志详情' ,icon: 'el-icon-lx-cascades'}
+                    component: resolve => require(['@/pages/log/logdetail.vue'], resolve),
+                    meta: { title: '日志详情' ,icon: 'el-icon-lx-cascades',tag:'/log/index'}
                 }
             ]
         },
@@ -82,7 +82,7 @@ export const asyncRouterMap = [
             children:[
                 {
                     path: 'index',
-                    component: resolve => require(['../components/page/404.vue'], resolve),
+                    component: resolve => require(['@/pages/error/404.vue'], resolve),
                 }
             ]
         },
@@ -93,7 +93,7 @@ export const asyncRouterMap = [
             children:[
                 {
                     path: 'index',
-                    component: resolve => require(['../components/page/403.vue'], resolve),
+                    component: resolve => require(['@/pages/error/404.vue'], resolve),
                 }
             ]
         },

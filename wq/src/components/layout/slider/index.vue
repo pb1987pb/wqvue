@@ -3,7 +3,7 @@
     <el-menu
       :show-timeout="200"
       :default-active="getIndex"
-      :collapse="colla"
+      :collapse="collapse"
       mode="vertical"
       background-color="#304156"
       text-color="#bfcbd9"
