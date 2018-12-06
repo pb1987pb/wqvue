@@ -75,6 +75,28 @@ export const asyncRouterMap = [
                 }
             ]
         },
+         {
+            path: '/chars',
+            component: Layout,
+            children:[
+                {
+                    path: 'index',
+                    component: resolve => require(['@/pages/chars'], resolve),
+                    meta: { title: 'chars' ,icon: 'el-icon-lx-global'}
+                }
+            ]
+        },
+         {
+            path: '/icon',
+            component: Layout,
+             hidden: true,
+            children:[
+                {
+                    path: 'index',
+                    component: resolve => require(['@/pages/icon'], resolve),
+                }
+            ]
+        },
         {
             path: '/404',
             component: Layout,
