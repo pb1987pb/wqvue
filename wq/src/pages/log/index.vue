@@ -60,17 +60,19 @@
 
 <script>
 //Scoped slot 可以获取到 row, column, $index 和 store（table 内部的状态管理）的数据，
-// 在外层获取slot-scope="scope"，就可以在里面使用。
+import { scrollTo } from '@/utils/scrollTo'
  import { setLocal } from '@/utils/localStorage.js'
  import pagination from '@/components/common/pagination' // Secondary package based on el-pagination
  import  Mixin  from '../min.js' //引入Mixin
     export default {
         mixins: [Mixin],
+        doNotInit:true,
          components: { pagination },
         data() {
              return {
                 getDataurl: '/static/log.json',
                 delUrl:'/myapi/logout',//删除请求后台接口
+                isFirstEnter:false,
              }
             },
         computed: {
@@ -80,9 +82,44 @@
             handledetail(index,row){
                 //详情先存储到 本地
                 setLocal('logdet',JSON.stringify(row))
-                this.$router.push('detail');
+               this.$router.push('detail');
             },
-        }
+            initData(){
+                //初始化一些数据
+                  scrollTo(0, 300);// 这个是回到顶部效果
+                this.tableData = [] ;
+                this.page = 1;
+                this.select_word = "" ;
+            //         select_word:'',//搜索关键字
+            // fromname:'addeditfrom',//增加或者修改数据时候表单的 ref
+            // page: 1, //当前页码
+            }
+        },
+      beforeRouteEnter(to, from, next) {
+       // 这里，不管是进来还是返回，还是有没有keep-alive，都会先到这里
+      if (from.path == '/log/detail') { // 这个name是下一级页面的路由name
+        to.meta.isBack = true; // 设置为true说明你是返回到这个页面，而不是通过跳转从其他页面进入到这个页面
+      }
+      next()
+    },
+      created(){
+        // 定义一个变量，不需要调用min.js的 created()
+       //如果是第一次进入，或者刷新操作的话，也请求数据,这个就是为了刷新，必须要加这个参数。
+     this.isFirstEnter = true
+    },
+    activated() {
+
+      if (!this.$route.meta.isBack || this.isFirstEnter) {
+         // 这里要先把列表的数据清空 ,不清除的话就会有之前的商品缓存，延迟显示最新的商品
+         this.initData() // 这里许要初始化dada()中的数据，一般的列表要初始化 页码数，页数，关键字
+        this.getData(); // 这里发起数据请求，（之前是放在created或者mounted中，现在只需要放在这里就好了，不需要再在created或者mounted中请求！！）
+      }
+      this.$route.meta.isBack = false //请求完后进行初始化
+      this.isFirstEnter = false;//请求完后进行初始化
+    },
+
+
+
     }
 
 </script>

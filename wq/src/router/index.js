@@ -14,7 +14,17 @@ export const constantRouterMap =[
 ]
 export default new VueRouter({
   mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+//   scrollBehavior: () => ({ y: 0 }), 
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      if (from.meta.keepAlive) {
+        from.meta.savedPosition = document.documentElement.scrollTop || document.body.parentNode.scrollTop || document.body.scrollTop;
+      }
+      return { x: 0, y: to.meta.savedPosition || 0 }
+    }
+  },
   routes: constantRouterMap
 });
 
@@ -65,7 +75,10 @@ export const asyncRouterMap = [
                 {
                     path: 'index',
                     component: resolve => require(['@/pages/log'], resolve),
-                    meta: { title: '日志管理' ,icon: 'el-icon-lx-favor'}
+                    meta: { title: '日志管理' ,icon: 'el-icon-lx-favor',
+                     keepAlive: true, //该字段表示该页面需要缓存
+                    isBack: false,////isback是false的时候请求数据，或者第一次进入的时候请求数据,感觉这个可以不写
+                  }
                 },
                 {
                     path: 'detail',

@@ -19,7 +19,14 @@ export default {
         }
     },
     created() {
-         this.getData();
+         
+         let option = this.$options.doNotInit
+       
+if (!option) {
+// this.initList()
+console.log('1234567'+this.$options.doNotInit);
+this.getData();
+}
      },
     methods: {
         //临时解决鼠标悬停报错 elemnyt-ui

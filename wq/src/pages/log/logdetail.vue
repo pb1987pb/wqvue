@@ -36,7 +36,14 @@ export default {
   mounted(){
       var data =  getLocal('logdet');
       this.dedata=JSON.parse(data);
-  }
+  },
+  beforeRouteLeave(to, from, next) {
+       
+if (to.path == "/log/index") {
+to.meta.keepAlive = true;
+} 
+next();
+}
 }
 </script>
 

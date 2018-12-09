@@ -5,11 +5,18 @@
         <div class="content-box" :class="{'content-collapse':collapse}">
             <!--<v-tags></v-tags>-->
             <div class="content">
-                <transition name="fade-transform" mode="out-in">
-                    <keep-alive :include="tagsList">
-                        <router-view></router-view>
-                    </keep-alive>
-                </transition>
+                <!-- <transition name="fade-transform" mode="out-in">
+                </transition> -->
+
+<transition  name="fade-transform" mode="out-in">
+    <keep-alive>
+        <router-view v-if="$route.meta.keepAlive" :key="$route.fullpath"></router-view>
+    </keep-alive>
+</transition>
+<transition  name="fade-transform" mode="out-in">
+    <router-view v-if="!$route.meta.keepAlive" :key="$route.fullpath"></router-view>
+</transition>
+          
             </div>
         </div>
     </div>
@@ -31,7 +38,8 @@
             vHead, vSidebar, vTags
         },
         created(){
-            
+            console.log(this.$route);
+             console.log(!this.$route.meta.keepAlive);
             // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
             // bus.$on('tags', msg => {
             //     let arr = [];
