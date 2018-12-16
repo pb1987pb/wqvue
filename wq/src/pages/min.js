@@ -7,15 +7,15 @@ export default {
             delUrl:'',//删除请求后台接口
             tableData: [], //获取到要展示列表的数据
             select_word:'',//搜索关键字
-            fromname:'addeditfrom',//增加或者修改数据时候表单的 ref
+            loading: false,//提交按钮的loading
             page: 1, //当前页码
-            pagezize:8, //每页显示个数,这里是默认是8
+            pagesize:10, //每页显示个数,这里是默认是8
             total : 0, // 总数
-            type:0,//0就是弹窗的类型，0表示新增，1表示修改
+            isEdit:false,//是否是修改
             addeditVisible: false, //修改框和增加框是一个框，开始状态
-            delVisible: false, // 删除框开始状态
-            form: { },//弹窗表单数据
-            idx: -1 ,//默认的修改或者删除的数组的index
+            visible:false,// 删除框开始状态
+            postForm: { },//弹窗表单数据
+            delData:{},//删除的数据
         }
     },
     created() {
@@ -23,8 +23,6 @@ export default {
          let option = this.$options.doNotInit
        
 if (!option) {
-// this.initList()
-console.log('1234567'+this.$options.doNotInit);
 this.getData();
 }
      },
@@ -37,116 +35,85 @@ cellMouseEnter(row, column, cell, event){
     // console.log(cellChild.innerHTML==='');
     if(''===cellChild.innerHTML){
       cellChild.innerHTML = '&nbsp';
-    }
-    // range.cloneRange()
-    // range.insertNode();
-    // var range = document.createRange();
-    // range.setStart(cellChild, 0);
-    // range.setEnd(cellChild, 1);
-    
+    } 
   }, 
-  // 获取数据
-    getData() {
+  // 获取数据,搜索的时候，page传init是true
+getData(init=false) {
+     if(init){
+        this.page=1;
+     }
               //这里是带了几个参数，页码的参数
               this.$axios.get(this.getDataurl,{ params:{
                   "page": this.page,
-                  "pagezize":this.pagesize,
+                  "pagesize":this.pagesize,
                   "select_word":this.select_word
               }}).then((res) => {
                   this.tableData = res.data.list;
                   this.total = res.data.count; //  页码数量
               })
           },
-          // 关闭增加或者编辑窗口
-          close(){
-            //这个是增加或者编辑框关闭的时候，在表单验证会出现错误，如果不清空这些错误，再次编辑就会出现错误。
-    this.$refs[this.fromname].clearValidate();
-   },
-   handleEdit(index, row) {  //点击编辑
-    this.type=1;//弹窗的类型是1
-    this.idx = index; // 编辑的index
-    this.setEditFrom(row);//给编辑的from写数据，这个如果不一样需要调用者重写 ***** 
-    this.addeditVisible = true; //编辑框出现
-    
-},
+           //点击编辑
+          handleEdit(index, row) { 
+            this.isEdit=true;//弹窗的类型是编辑
+               this.setEditFrom(row);//设置编辑数据
+            this.addeditVisible = true; //编辑框出现
+            
+        },
  //点击增加,增加框弹出来
 handleAdd(){
-  this.type=0;//弹窗的类型是1
-  this.form = {};//清空from里面数据
-  this.setAddFrom();//给某些初始值赋值都在这方法里面，这个需要调用者必须重写 *******
+  this.isEdit=false;
+  this.setAddFrom();//给某些初始值赋值都在这方法里面
   this.addeditVisible = true; //编辑框出现
 },
 //  点击删除，删除框弹出来
-handleDelete(index, row) {
-    this.idx = index; 
-    this.form=row;
-    // 这个是让删除的弹窗出来.
-    this.delVisible = true;
+handleDelete(row) {
+     this.delData=  Object.assign({}, row);
+     this.visible = true;
 },
-saveEdit() {
-    // 保存编辑或者保存增加的数据
-     this.$refs[this.fromname].validate((valid) => {
-if (valid) {
-
-       // 更新或者是编辑前的组织数据
-     let resultData =  this.editData();
-     
-          if(this.type == 1) //更新数据的情况
-        {
-
-     //发送更新请求
-   this.$axios.post(this.editUrl,{ data:{
-       "data": resultData
-   }}).then(res => {
-        this.addeditVisible = false; //编辑增加框消失
-this.tableData.splice(this.idx,1,resultData); // 更新当前数据
-  this.alertMessage('修改');//修改成功的提示
-
-   }).catch(err=>{
-       //更新数据失败，
-  
-
-   })
-  }
-       else //增加数据
-       {
+ //增加或者编辑的弹窗消失
+ handleClose(){
+    this.$refs.postForm.resetFields(); //对整个表单进行重置，将所有字段值重置为初始值并移除校验结果
+    this.loading=false;
+     this.addeditVisible = false ;//弹窗消失
+ },   
+ //提交表单
+submitForm(fromname) {
+                this.$refs[fromname].validate(valid => {
+                  if (valid) {   
+                   this.loading = true;
+                   console.log(this.postForm);
+                    let url = this.isEdit?this.editUrl:this.addUrl;
+                      // 增加或者是编辑前再次的组织数据
+               let resultData =  this.getPostData();
+                     this.$axios.post(url,{ data:
+                  resultData
+             }).then(() => {
+                      this.loading = false; //关闭提交按钮的loading
+                      this.getData();//刷新数据
+                      this.handleClose();//关闭弹窗
+                      //  弹窗提示成功。
+             }).catch(err=>{
+               //新增或者修改数据失败
+            this.loading = false
           
-                  //发送增加请求
-   this.$axios.post(this.addUrl,{ data:{
-       "data": resultData
-   }}).then(res => {
-        this.addeditVisible = false; //编辑增加框消失
-  // 新增数据的情况 ，把新增的数据放到第一个
-           this.tableData.unshift(resultData);
-           this.total+=1; //总数量增加一
-           this.alertMessage('增加');
-   }).catch(err=>{
-       //新增数据失败，
-   
-   })
-       
-       }
-       
-   
-} else {
- //编辑增加的时候没通过验证
-console.log('error submit!!');
-return false;
-}
-});
-  
-},
+             })
+                    
+                  } else {
+                    console.log('error submit!!')
+                    return false
+                  }
+                })
+              },
 // 确定删除
 deleteRow(){
+    console.log('删除目录');
     //发送删除请求
-this.$axios.post(this.delUrl,{ data:{
-"data": this.form
-}}).then(res => {
-this.delVisible = false; // 让这个删除框消失
-this.tableData.splice(this.idx, 1);//删除这个数组中的这个数据，这个是可以触发数据更新的
-this.total-=1; //总数量增加一
-this.alertMessage('删除')
+this.$axios.post(this.delUrl,{ data:this.delData}).then(() => {
 
+this.visible = false; // 让这个删除框消失
+this.delData={};//情况删除的数据
+this.getData();//重新获取数据
+// this.alertMessage('删除') //提示成功跳转。
 }).catch(err=>{
 //删除数据失败，
 
@@ -169,16 +136,15 @@ message: `对不起，此功能正在完善`
  setEditFrom(row)
  {
      //这个就是整个的数据拷贝，要是要对数据进行特殊化处理，要修改这个方法
- this.form =Object.assign({}, row); //对象要拷贝
+ this.postForm =Object.assign({}, row); //对象要拷贝
  },
- //组织需要改变的数据，这个一般的不需要 重写
- editData(){
-       return Object.assign({}, this.form);
+ //增加或者编辑的时候，最后的得到这个提交的数据对象
+ getPostData(){
+       return Object.assign({}, this.postForm);
  },
  setAddFrom()
  {
-       //这个是需要重写的方法，必须重写，哪怕是空，也必须重写
-       throw new Error('component must implement handlePlaylist method')
+      
  },
  //成功或者失败的弹窗，type 0表示失败，默认成功
 alertMessage(caozuoname,typeNum=1){

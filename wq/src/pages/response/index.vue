@@ -37,7 +37,7 @@
                 <el-table-column label="操作" width="250" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -48,50 +48,50 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog :title="type==0?'新增reponse':'编辑reponse'" :visible.sync="addeditVisible" width="40%" @close="close">
-            <el-form  :model="form" label-width="160px"  :ref="this.fromname" :rules="rules">
+        <el-dialog  :title="isEdit?'编辑reponse':'新增reponse'"  :visible.sync="addeditVisible" width="40%" :before-close="handleClose">
+            <el-form  :model="postForm" label-width="160px"  ref="postForm" :rules="rules">
                  
                 <el-form-item label="交易命令：" prop="trade_no">
-                      <el-input v-model="form.trade_no"></el-input>
+                      <el-input v-model="postForm.trade_no"></el-input>
                 </el-form-item>
                 <el-form-item label="交易编码：" prop="trade_code">
-                    <el-input v-model.trim="form.trade_code" ></el-input>
+                    <el-input v-model.trim="postForm.trade_code" ></el-input>
                 </el-form-item>
-                <el-form-item label="交易名称：">
-                    <el-input v-model="form.trade_name"></el-input>
+                <el-form-item label="交易名称：" prop="trade_name">
+                    <el-input v-model="postForm.trade_name"></el-input>
                 </el-form-item>
-                <el-form-item label="交易序号：">
-                    <el-input v-model="form.trade_seq"></el-input>
+                <el-form-item label="交易序号：" prop="trade_seq">
+                    <el-input v-model="postForm.trade_seq"></el-input>
                 </el-form-item>
-                <el-form-item label="交易类型：">
-                        <el-radio v-model="form.trade_type" label="0">返回字符串</el-radio>
-                    <el-radio v-model="form.trade_type" label="1">返回cursor</el-radio>
+                <el-form-item label="交易类型：" prop="trade_type">
+                        <el-radio v-model="postForm.trade_type" label="0">返回字符串</el-radio>
+                    <el-radio v-model="postForm.trade_type" label="1">返回cursor</el-radio>
                     
                 </el-form-item>
-                 <el-form-item label="层数：">
+                 <el-form-item label="层数：" prop="level_type">
                        
-                    <el-input-number v-model="form.level_type"  :min="1" :max="100" label="描述文字"></el-input-number>
+                    <el-input-number v-model="postForm.level_type"  :min="1" :max="100" label="描述文字"></el-input-number>
                     
                 </el-form-item>
-            <el-form-item label="值类型：">
-                        <el-radio v-model="form.value_type" label="0">标题（不需赋值）</el-radio>
-                    <el-radio v-model="form.value_type" label="1">标签（需赋值）</el-radio>
+            <el-form-item label="值类型：" prop="value_type">
+                        <el-radio v-model="postForm.value_type" label="0">标题（不需赋值）</el-radio>
+                    <el-radio v-model="postForm.value_type" label="1">标签（需赋值）</el-radio>
                     
                 </el-form-item>
-                  <el-form-item label="分组字段('|分隔')：">
-                    <el-input v-model="form.group_by"></el-input>
+                  <el-form-item label="分组字段('|分隔')：" prop="group_by">
+                    <el-input v-model="postForm.group_by"></el-input>
                 </el-form-item>
-                 <el-form-item label="父节点标签：">
-                    <el-input v-model="form.parent_node"></el-input>
+                 <el-form-item label="父节点标签：" prop="parent_node">
+                    <el-input v-model="postForm.parent_node"></el-input>
                 </el-form-item>
-                 <el-form-item label="有效标志：">
-                      <el-radio v-model="form.valid" label="Y">有效</el-radio>
-                    <el-radio v-model="form.valid" label="N">无效</el-radio>
+                 <el-form-item label="有效标志：" prop="valid">
+                      <el-radio v-model="postForm.valid" label="Y">有效</el-radio>
+                    <el-radio v-model="postForm.valid" label="N">无效</el-radio>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="addeditVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveEdit()">确 定</el-button>
+                <el-button @click="handleClose">取 消</el-button>
+                <el-button type="primary" @click="submitForm('postForm')">确 定</el-button>
             </span>
         </el-dialog>
 
@@ -109,18 +109,28 @@
 
 <script>
 //Scoped slot 可以获取到 row, column, $index 和 store（table 内部的状态管理）的数据，
-// 在外层获取slot-scope="scope"，就可以在里面使用。
+
 import  Mixin  from '../min.js'; //引入Mixin
-import pagination from '@/components/common/pagination'; // Secondary package based on el-pagination
     export default {
         mixins: [Mixin],
-        components: { pagination },
         data() {
             return {
                getDataurl: '/static/response.json',//获取数据接口
                 addUrl:'/myapi/logout',//增加请求后台接口
                 editUrl:'/myapi/logout',//编辑请求后台接口
                 delUrl:'/myapi/logout',//删除请求后台接口
+                postForm: {
+                  trade_no: '',
+                 trade_code: '', 
+                   trade_name: '', 
+                    trade_seq: '', 
+                    trade_type: '',
+                    level_type: '1', 
+                    value_type: '', 
+                    group_by: '', 
+                    parent_node: '',
+                    valid: 'Y',
+                     },
                    rules: {//验证规则
                     trade_no: [
                         { required: true, message: '请输入交易命令', trigger: 'blur' }
@@ -137,10 +147,6 @@ import pagination from '@/components/common/pagination'; // Secondary package ba
  
         },
         methods: {
-          setAddFrom(){
-             this.$set(this.form,"valid","Y")//默认增加有效
-               this.$set(this.form,"level_type","1")//默认层数是1
-            }
 
         }
     }

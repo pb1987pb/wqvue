@@ -29,7 +29,7 @@
                 <el-table-column label="操作" width="250" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -39,13 +39,12 @@
             </div>
         </div>
 
-        <!-- 编辑弹出框 -->
-        <el-dialog :title="type==0?'新增request':'编辑request'" :visible.sync="addeditVisible" width="30%" @close="close">
-            <el-form  :model="form" label-width="120px"  :ref="fromname" :rules="rules">
+    <!-- 编辑弹出框 -->
+        <el-dialog :title="isEdit?'编辑request':'新增request'" :visible.sync="addeditVisible" width="30%" :before-close="handleClose">
+            <el-form  :model="postForm" label-width="120px"  ref="postForm" :rules="rules">
                  
                 <el-form-item label="接口方：" prop="interface">
-                      <!--<el-input v-model="form.interface"></el-input>-->
-                      <el-select v-model="form.interface" placeholder="请选择">
+                      <el-select v-model="postForm.interface" placeholder="请选择">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -55,56 +54,54 @@
   </el-select>
                 </el-form-item>
                 <el-form-item label="交易代码：" prop="trade_code">
-                    <el-input v-model.trim="form.trade_code" ></el-input>
+                    <el-input v-model.trim="postForm.trade_code" ></el-input>
                 </el-form-item>
-                <el-form-item label="交易名称：">
-                    <el-input v-model.trim="form.trade_name"></el-input>
+                <el-form-item label="交易名称：" prop="trade_name">
+                    <el-input v-model.trim="postForm.trade_name"></el-input>
                 </el-form-item>
                 <el-form-item label="交易命令：" prop="cmdtext">
-                    <el-input v-model.trim="form.cmdtext"></el-input>
+                    <el-input v-model.trim="postForm.cmdtext"></el-input>
                 </el-form-item>
-                <el-form-item label="参数个数：">
-                    <!-- <el-input v-model.number="form.parm_count"></el-input> -->
-                     <el-input-number v-model="form.parm_count"  :min="0" :max="100" ></el-input-number>
+                <el-form-item label="参数个数：" prop="parm_count">
+                     <el-input-number v-model="postForm.parm_count"  :min="0" :max="100" ></el-input-number>
                 </el-form-item>
-           <el-form-item label="有效标记：" >
-                    <el-radio v-model="form.valid" label="Y">有效</el-radio>
-                    <el-radio v-model="form.valid" label="N">无效</el-radio>
+           <el-form-item label="有效标记：" prop="valid">
+                    <el-radio v-model="postForm.valid" label="Y">有效</el-radio>
+                    <el-radio v-model="postForm.valid" label="N">无效</el-radio>
                 </el-form-item>
             </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="addeditVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveEdit()">确 定</el-button>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="handleClose">取 消</el-button>
+                <el-button v-loading="loading" type="primary" @click="submitForm('postForm')">确 定</el-button>
             </span>
         </el-dialog>
-
-
-        <!-- 删除提示框 -->
-        <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-            <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="delVisible = false">取 消</el-button>
-                <el-button type="primary" @click="deleteRow">确 定</el-button>
-            </span>
-        </el-dialog>
+       
+     
+               <!-- 删除提示框 -->
+  <deldialog :visible.sync="visible" @delete="deleteRow"></deldialog>
     </div>
 </template>
 
 <script>
-//Scoped slot 可以获取到 row, column, $index 和 store（table 内部的状态管理）的数据，
-// 在外层获取slot-scope="scope"，就可以在里面使用。
+
 
 import  Mixin  from '../min.js';//引入Mixin
-import pagination from '@/components/common/pagination'; // Secondary package based on el-pagination
     export default {
       mixins: [Mixin],
-      components: { pagination },
         data() {
              return {
                 getDataurl: '/static/request.json',//获取数据接口
                 addUrl:'/myapi/logout',//增加请求后台接口
                 editUrl:'/myapi/logout',//编辑请求后台接口
                 delUrl:'/myapi/logout',//删除请求后台接口
+                  postForm:{
+                    interface:'',
+                    trade_code: '',
+                    trade_name: '', 
+                    cmdtext: '', 
+                    parm_count: '0', 
+                     valid: 'Y', 
+                     },//默认表单数据,//弹窗表单数据
                    rules: {//验证规则
                     interface: [
                         { required: true, message: '请选择接口', trigger: 'blur' }
@@ -141,11 +138,6 @@ import pagination from '@/components/common/pagination'; // Secondary package ba
  
         },
         methods: {
-            setAddFrom()
-            {
-              this.$set(this.form,"valid","Y")//默认增加有效      
-               this.$set(this.form,"parm_count","0")//默认增加有效       
-            },
 
         }
     }

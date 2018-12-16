@@ -25,9 +25,6 @@
                 </el-table-column>
                 <el-table-column prop="trade_date" label="trade_date" align="center" width="200">
                 </el-table-column>
-
- <!-- <el-table-column prop="trade_text" label="trade_text" align="center" show-overflow-tooltip="true">
-                </el-table-column> -->
                  <el-table-column prop="return_text" label="return_text" align="center" :show-overflow-tooltip="true">
                 </el-table-column>
  <el-table-column prop="return_code" label="return_code" align="center" >
@@ -37,37 +34,25 @@
                     <template slot-scope="scope">
                     
                          <el-button type="text" icon="el-icon-delete" class="red" @click="handledetail(scope.$index, scope.row)">详情</el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <div class="pagination">
                  <pagination v-show="total>0" :total="total" :page.sync="page" :pagesize.sync="pagesize" @pagination="getData" />
-                </el-pagination>
+              
             </div>
         </div>
-
-
-        <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-            <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="delVisible = false">取 消</el-button>
-                <el-button type="primary" @click="deleteRow">确 定</el-button>
-            </span>
-        </el-dialog>
+       <deldialog :visible.sync="visible" @delete="deleteRow"></deldialog>
     </div>
 </template>
 
 <script>
-//Scoped slot 可以获取到 row, column, $index 和 store（table 内部的状态管理）的数据，
 import { scrollTo } from '@/utils/scrollTo'
- import { setLocal } from '@/utils/localStorage.js'
- import pagination from '@/components/common/pagination' // Secondary package based on el-pagination
  import  Mixin  from '../min.js' //引入Mixin
     export default {
         mixins: [Mixin],
         doNotInit:true,
-         components: { pagination },
         data() {
              return {
                 getDataurl: '/static/log.json',
@@ -80,8 +65,9 @@ import { scrollTo } from '@/utils/scrollTo'
         },
         methods: {
             handledetail(index,row){
-                //详情先存储到 本地
-                setLocal('logdet',JSON.stringify(row))
+                //详情先存储到 cookie
+               
+               this.$cookie.set('logdet',row);
                this.$router.push('detail');
             },
             initData(){
@@ -95,13 +81,6 @@ import { scrollTo } from '@/utils/scrollTo'
             // page: 1, //当前页码
             }
         },
-      beforeRouteEnter(to, from, next) {
-       // 这里，不管是进来还是返回，还是有没有keep-alive，都会先到这里
-      if (from.path == '/log/detail') { // 这个name是下一级页面的路由name
-        to.meta.isBack = true; // 设置为true说明你是返回到这个页面，而不是通过跳转从其他页面进入到这个页面
-      }
-      next()
-    },
       created(){
         // 定义一个变量，不需要调用min.js的 created()
        //如果是第一次进入，或者刷新操作的话，也请求数据,这个就是为了刷新，必须要加这个参数。

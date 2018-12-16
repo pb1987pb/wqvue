@@ -22,7 +22,6 @@
 <script>
 import BackToTop from '@/components/common/BackToTop'
 
- import { getLocal } from '@/utils/localStorage.js'
 export default {
      components: { BackToTop },
        data: function(){
@@ -34,13 +33,12 @@ export default {
 
   },
   mounted(){
-      var data =  getLocal('logdet');
-      this.dedata=JSON.parse(data);
+      this.dedata=this.$cookie.getJSON('logdet');
   },
   beforeRouteLeave(to, from, next) {
        
 if (to.path == "/log/index") {
-to.meta.keepAlive = true;
+to.meta.isBack = true;
 } 
 next();
 }
