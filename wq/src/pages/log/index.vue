@@ -33,7 +33,7 @@
                 <el-table-column label="操作" width="250" align="center">
                     <template slot-scope="scope">
                     
-                         <el-button type="text" icon="el-icon-delete" class="red" @click="handledetail(scope.$index, scope.row)">详情</el-button>
+                         <el-button type="text" icon="el-icon-delete" @click="handledetail(scope.$index, scope.row)">详情</el-button>
                         <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -51,6 +51,7 @@
 import { scrollTo } from '@/utils/scrollTo'
  import  Mixin  from '../min.js' //引入Mixin
     export default {
+        name: 'loglist',
         mixins: [Mixin],
         doNotInit:true,
         data() {
@@ -87,7 +88,7 @@ import { scrollTo } from '@/utils/scrollTo'
      this.isFirstEnter = true
     },
     activated() {
-
+             console.log('进来获取数据');
       if (!this.$route.meta.isBack || this.isFirstEnter) {
          // 这里要先把列表的数据清空 ,不清除的话就会有之前的商品缓存，延迟显示最新的商品
          this.initData() // 这里许要初始化dada()中的数据，一般的列表要初始化 页码数，页数，关键字
@@ -103,28 +104,7 @@ import { scrollTo } from '@/utils/scrollTo'
 
 </script>
 
-<style scope scoped>
- .jkname{display: inline-block;margin-right: 20px;margin-left: 15px;position: relative;top: 4px;}
- .handle-box {
-        margin-bottom: 20px;
-    }
-
- .handle-select {
-        width: 120px;
-    }
- .handle-input {
-        width: 300px;
-        display: inline-block;
-    }
- .del-dialog-cnt{
-        font-size: 16px;
-        text-align: center
-    }
- .table{
-        width: 100%;
-        font-size: 14px;
-    }
-
+<style scoped>
 
 
 

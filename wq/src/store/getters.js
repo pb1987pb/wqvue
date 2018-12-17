@@ -4,6 +4,7 @@ const getters = {
   name: state => state.user.name,
   roles : state => state.user.roles,
   collapse : state => state.app.collapse,
+  keepAlive:state => state.app.keepAlive,
   permission_routers: state => state.permission.routers,
   addRouters: state => state.permission.addRouters,
 }

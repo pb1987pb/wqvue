@@ -173,33 +173,7 @@
 </script>
 
 <style>
-.table .jkname{display: inline-block;margin-right: 20px;margin-left: 15px;position: relative;top: 4px;}
- .table .handle-box {
-        margin-bottom: 20px;
-    }
 
-.table .handle-select {
-        width: 120px;
-    }
-.table .handle-input {
-        width: 300px;
-        display: inline-block;
-    }
-.table .del-dialog-cnt{
-        font-size: 16px;
-        text-align: center
-    }
-.table .table{
-        width: 100%;
-        font-size: 14px;
-    }
-.table .red{
-        color: #ff0000;
-    }
- .table .myinput{width: 71%;}
- .table .myinput .el-input__inner{color: red;}
-.table  .el-input.is-disabled .el-input__inner{color: red !important}
- .table .myshouquan{width: 28%;}
     
 
 </style>

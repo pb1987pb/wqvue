@@ -3,7 +3,7 @@
 @import './icon.css';
 @import './sidebar.css';
 @import './element-ui.css';
-
+@import './list.css';
 /*整个页面的布局*/
 #app{
   height: 100%;

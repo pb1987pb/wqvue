@@ -73,7 +73,9 @@ handleDelete(row) {
  //增加或者编辑的弹窗消失
  handleClose(){
     this.$refs.postForm.resetFields(); //对整个表单进行重置，将所有字段值重置为初始值并移除校验结果
+    console.log('我来了');
     this.loading=false;
+    console.log(this.postForm);
      this.addeditVisible = false ;//弹窗消失
  },   
  //提交表单
@@ -91,6 +93,7 @@ submitForm(fromname) {
                       this.loading = false; //关闭提交按钮的loading
                       this.getData();//刷新数据
                       this.handleClose();//关闭弹窗
+                      this.alertMessage('操作');
                       //  弹窗提示成功。
              }).catch(err=>{
                //新增或者修改数据失败
@@ -113,7 +116,7 @@ this.$axios.post(this.delUrl,{ data:this.delData}).then(() => {
 this.visible = false; // 让这个删除框消失
 this.delData={};//情况删除的数据
 this.getData();//重新获取数据
-// this.alertMessage('删除') //提示成功跳转。
+this.alertMessage('删除') //提示成功跳转。
 }).catch(err=>{
 //删除数据失败，
 
@@ -144,7 +147,7 @@ message: `对不起，此功能正在完善`
  },
  setAddFrom()
  {
-      
+      // 这个里面一般的就是空，不需要写
  },
  //成功或者失败的弹窗，type 0表示失败，默认成功
 alertMessage(caozuoname,typeNum=1){

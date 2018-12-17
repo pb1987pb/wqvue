@@ -5,24 +5,18 @@
         <div class="content-box" :class="{'content-collapse':collapse}">
             <!--<v-tags></v-tags>-->
             <div class="content">
-                <!-- <transition name="fade-transform" mode="out-in">
-                </transition> -->
-
-<transition  name="fade-transform" mode="out-in">
-    <keep-alive>
-        <router-view v-if="$route.meta.keepAlive" :key="$route.fullpath"></router-view>
+<transition name="fade-transform" mode="out-in">
+           <keep-alive :include="keepAlive" >
+      <router-view :key="$route.fullpath"/>
     </keep-alive>
-</transition>
-<transition  name="fade-transform" mode="out-in">
-    <router-view v-if="!$route.meta.keepAlive" :key="$route.fullpath"></router-view>
-</transition>
-          
+    </transition>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     import vHead from './Header.vue';
     import vSidebar from './slider/index.vue';
     import vTags from './Tags.vue';
@@ -37,17 +31,31 @@
         components:{
             vHead, vSidebar, vTags
         },
+          computed: {
+                     ...mapGetters([
+          'keepAlive',
+        ])
+  },
         created(){
-            console.log(this.$route);
-             console.log(!this.$route.meta.keepAlive);
-            // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
-            // bus.$on('tags', msg => {
-            //     let arr = [];
-            //     for(let i = 0, len = msg.length; i < len; i ++){
-            //         msg[i].name && arr.push(msg[i].name);
-            //     }
-            //     this.tagsList = arr;
-            // })
+    
+                 this.checkRouter(this.$route);
+        },
+        methods:{
+            //验证路由里面是否有  keepAlive 属性，是否加入 keepAlive 中
+            checkRouter(curentrouter){
+                     if(curentrouter.meta.keepAlive == true  && this.tagsList.indexOf(curentrouter.name)==-1){
+                            this.tagsList.push(curentrouter.name);
+                           this.$store.commit('SET_KEEP_ALIVE',this.tagsList);
+                        }
+            }
+        },
+           watch:{
+            $route:{
+                handler : function(to){
+                    this.checkRouter(to);
+                },
+            }
+          
         }
     }
 </script>

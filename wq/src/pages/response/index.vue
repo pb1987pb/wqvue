@@ -11,7 +11,7 @@
                 <el-input v-model="select_word" placeholder="筛选关键词"  class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
             </div>
-            <el-table :data="tableData" border class="table" @cell-mouse-enter = "cellMouseEnter">
+            <el-table :data="tableData" border class="table" @cell-mouse-enter="cellMouseEnter">
                 
                 <el-table-column prop="trade_no" label="交易命令"  width="120" align="center">
                 </el-table-column>
@@ -153,27 +153,7 @@ import  Mixin  from '../min.js'; //引入Mixin
 
 </script>
 
-<style scope scoped>
- .jkname{display: inline-block;margin-right: 20px;margin-left: 15px;position: relative;top: 4px;}
- .handle-box {
-        margin-bottom: 20px;
-    }
-
- .handle-select {
-        width: 120px;
-    }
- .handle-input {
-        width: 300px;
-        display: inline-block;
-    }
- .del-dialog-cnt{
-        font-size: 16px;
-        text-align: center
-    }
- .table{
-        width: 100%;
-        font-size: 14px;
-    }
+<style scoped>
 
 
     

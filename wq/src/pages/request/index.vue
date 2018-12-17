@@ -144,27 +144,8 @@ import  Mixin  from '../min.js';//引入Mixin
 
 </script>
 
-<style scope scoped>
- .jkname{display: inline-block;margin-right: 20px;margin-left: 15px;position: relative;top: 4px;}
- .handle-box {
-        margin-bottom: 20px;
-    }
+<style scoped>
 
- .handle-select {
-        width: 120px;
-    }
- .handle-input {
-        width: 300px;
-        display: inline-block;
-    }
- .del-dialog-cnt{
-        font-size: 16px;
-        text-align: center
-    }
- .table{
-        width: 100%;
-        font-size: 14px;
-    }
 
 
     

@@ -75,6 +75,7 @@ export const asyncRouterMap = [
                 {
                     path: 'index',
                     component: resolve => require(['@/pages/log'], resolve),
+                    name:'loglist',
                     meta: { title: '日志管理' ,icon: 'el-icon-lx-favor',
                      keepAlive: true, //该字段表示该页面需要缓存
                     isBack: false,////isback是false的时候请求数据，或者第一次进入的时候请求数据,感觉这个可以不写

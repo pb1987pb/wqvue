@@ -40,11 +40,12 @@
         data() {
             return {
                 fullscreen: false,
+                aliveList:[],
             }
         },
         computed:{
                 ...mapGetters([
-          'collapse','name'
+          'collapse','name',
         ]),
         },
         methods:{
@@ -98,7 +99,7 @@
         mounted(){
             this.changeCol();
             window.addEventListener('resize', this.changeCol);
-        }
+        },
     }
 </script>
 <style scoped>
